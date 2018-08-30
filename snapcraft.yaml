@@ -1,4 +1,4 @@
-name: core16
+name: core16-extras
 version: 16-2
 version-script: |
     # remember to keep version script in sync with "Makefile"
