@@ -16,6 +16,30 @@ parts:
     organize:
       configure: meta/hooks/configure
 
+
+  packages:
+    after: [hooks, livebuild]
+    plugin: nil
+    override-build: |
+      snapcraftctl build
+      # setup necessary empty folders for snapd to bind mount on top of
+      mkdir -p $SNAPCRAFT_PART_INSTALL/var/snap
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/snapd
+      mkdir -p $SNAPCRAFT_PART_INSTALL/var/lib/snapd
+      mkdir -p $SNAPCRAFT_PART_INSTALL/snap
+
+      # setup symlink for snapctl so that snaps and hooks can call it
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
+      cd $SNAPCRAFT_PART_INSTALL/usr/bin/
+      ln -s ../lib/snapd/snapctl snapctl
+    stage-packages:
+      - python2.7
+      - nodejs
+      - sqlite3
+      - wget
+      - rsync
+      - openjdk-8-jdk
+
   livebuild:
     source: .
     plugin: make
