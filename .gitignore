@@ -1,4 +1,7 @@
 parts/
+stage/
 prime/
 *.snap
 *.bz2
+snap/.snapcraft/
+
